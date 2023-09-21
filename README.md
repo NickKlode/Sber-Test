@@ -6,6 +6,7 @@
   3. make migrate
 
 Запуск тестов:
+
   make test
 
 Swagger: http://localhost:8080/swagger/index.html#/
