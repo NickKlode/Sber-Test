@@ -2,6 +2,8 @@ package sber
 
 import (
 	"errors"
+	"regexp"
+	"time"
 )
 
 type TodoList struct {
@@ -28,4 +30,25 @@ func (i UpdateInput) Validate() error {
 		return errors.New("update structure has no values")
 	}
 	return nil
+}
+func ValidateDate(date string) error {
+	if date == "" {
+		return errors.New("date field is empty")
+	}
+	re := regexp.MustCompile("^202[3-9]{1}-[0-1][0-2]-[0-3][0-9]$")
+
+	d := re.MatchString(date)
+	if d {
+		return nil
+	}
+
+	return errors.New("wrong date")
+}
+
+func SetDate() string {
+	layout := "2006-01-02"
+	t := time.Now()
+	dateString := t.Format(layout)
+	date := dateString
+	return date
 }

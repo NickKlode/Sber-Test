@@ -14,6 +14,11 @@ func NewTodoListService(repo repository.TodoList) *TodoListService {
 }
 
 func (s *TodoListService) Create(list sber.TodoList) (int, error) {
+
+	if err := sber.ValidateDate(list.Date); err != nil {
+		list.Date = sber.SetDate()
+	}
+
 	return s.repo.Create(list)
 }
 
@@ -32,5 +37,8 @@ func (s *TodoListService) Update(listId int, input sber.UpdateInput) error {
 	return s.repo.Update(listId, input)
 }
 func (s *TodoListService) GetByDate(date string) ([]sber.TodoList, error) {
+	if err := sber.ValidateDate(date); err != nil {
+		date = sber.SetDate()
+	}
 	return s.repo.GetByDate(date)
 }

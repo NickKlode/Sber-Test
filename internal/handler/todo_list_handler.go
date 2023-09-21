@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"sber-test"
 	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -26,12 +25,6 @@ func (h *Handler) createList(c *gin.Context) {
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid input body")
 		return
-	}
-	if input.Date == "" {
-		layout := "2006-01-02"
-		t := time.Now()
-		dateString := t.Format(layout)
-		input.Date = dateString
 	}
 
 	id, err := h.service.TodoList.Create(input)
