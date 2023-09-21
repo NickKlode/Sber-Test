@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  sbertest:
+    build: ./
+
+    command: ./wait-for-postgres.sh db ./sbertest
+    
+    ports: 
+      - 8080:8080
+    container_name: sbertest
+    environment:
+      POSTGRES_PASSWORD: postgres
+    depends_on:
+      - db
+   
+
+  db:
+
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      
+     
+
+      
+    ports:
+      - "5432:5432"
+    volumes: 
+      - ./.dbdata/postgres/data:/var/lib/postgresql/data
